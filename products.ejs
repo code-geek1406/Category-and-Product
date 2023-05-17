@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product Master</title>
+</head>
+<body>
+  <h1>Product Master</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Category ID</th>
+        <th>Category Name</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% products.forEach(product => { %>
+        <tr>
+          <td><%= product.productId %></td>
+          <td><%= product.productName %></td>
+          <td><%= product.categoryId %></td>
+          <td><%= product.categoryName %></td>
+          <td>
+            <a href="/products/<%= product.productId %>">Edit</a>
+            <form action="/products/<%= product.productId %>" method="POST" style="display: inline;">
+              <input type="hidden" name="_method" value="DELETE">
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+  <nav>
+    <ul class="pagination">
+      <% if (currentPage > 1) { %>
+        <li class="page-item">
+          <a href="/products?page=<%= currentPage - 1 %>" class="page-link">&laquo;</a>
+        </li>
+      <% } %>
+      <% for (let i = 1; i <= totalPages; i++) { %>
+        <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+          <a href="/products?page=<%= i %>" class="page-link"><%= i %></a>
+        </li>
+      <% } %>
+      <% if (currentPage < totalPages) { %>
+        <li class="page-item">
+          <a href="/products?page=<%= currentPage + 1 %>" class="page-link">&raquo;</a>
+        </li>
+      <% } %>
+    </ul>
+  </nav>
+</body>
+</html>
